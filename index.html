@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lanu</title>
+    <style>
+      body {
+        background-color: #000;
+        margin: 0;
+      }
+      textarea {
+        border-color: #90f;
+        font-size: 24px;
+        color: #fff;
+        background-color: #111;
+        width: 46%;
+        height: 85vh;
+        margin-left: 2%;
+        margin-top: 1vh;
+      }
+      button {
+        border-color: #90f;
+        background-color: #101;
+        color: #fff;
+        font-size: 5vh;
+        font: bold;
+        width: 96%;
+        margin-left: 2%;
+        height: 8vh;
+        margin-top: 1vh;
+      }
+      #out {
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="ta"></textarea>
+    <textarea id="out" disabled value="Clear"></textarea>
+    <button id="btn">run!</button>
+    <script src="wasm.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
