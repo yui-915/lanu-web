@@ -106,16 +106,32 @@ function highlight(text) {
     .join("");
 }
 
+let stdout_buffer = "";
+let stdout_buffer_clear = false;
+setInterval(() => {
+  if (stdout_buffer_clear) return stdout_clear_fr();
+  if (!stdout_buffer.length) return;
+  terminal_view.innerHTML += stdout_buffer;
+  terminal_pre.scrollTop = terminal_pre.scrollHeight;
+  stdout_buffer = "";
+}, 50);
+
 function stdout_write(value = " ") {
+  if (stdout_buffer_clear) stdout_clear_fr();
   const text = value
     .replaceAll(/&/g, "&amp")
     .replaceAll(/</g, "&lt;")
     .replaceAll(/>/g, "&gt;");
-  terminal_view.innerHTML += text;
-  terminal_pre.scrollTop = Number.POSITIVE_INFINITY;
+  stdout_buffer += text;
 }
 
 function stdout_clear() {
+  stdout_buffer_clear = true;
+}
+
+function stdout_clear_fr() {
+  stdout_buffer = "";
+  stdout_buffer_clear = false;
   terminal_view.innerHTML = "";
 }
 
