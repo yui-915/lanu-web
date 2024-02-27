@@ -1,0 +1,153 @@
+@import "catppuccin.css";
+@import "font.css";
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+:root {
+  --view-padding-top: 20px;
+  --view-padding-left: 50px;
+}
+
+#editor {
+  /* flex: 1 1 auto; */
+  position: relative;
+  /* width: 100px; */
+  width: 100%;
+  height: 100%;
+}
+
+.editor {
+  caret-color: var(--ctp-mocha-subtext0);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  border: none;
+  outline: none;
+
+  resize: none;
+}
+
+.editor,
+#terminal-pre {
+  margin: 0;
+  padding-top: var(--view-padding-top);
+  height: calc(100% - var(--view-padding-top));
+  padding-left: var(--view-padding-left);
+  width: calc(100% - var(--view-padding-left));
+  white-space: pre;
+  overflow: auto;
+  color: var(--ctp-mocha-text);
+  font-family: "JetBrains Mono";
+  font-size: 20px;
+  /* line-height: 20px; */
+}
+#terminal-view {
+  white-space: pre-wrap;
+}
+
+#main-window,
+.sidebar-button-selected {
+  background-color: var(--ctp-mocha-base);
+}
+.instruction {
+  color: var(--ctp-frappe-red);
+}
+.datatype {
+  color: var(--ctp-frappe-yellow);
+}
+.identifier {
+  color: var(--ctp-frappe-blue);
+}
+.number {
+  color: var(--ctp-frappe-yellow);
+}
+.string {
+  color: var(--ctp-frappe-green);
+}
+.escaped {
+  color: var(--ctp-frappe-sky);
+}
+.comment {
+  color: var(--ctp-frappe-surface1);
+}
+.label {
+  color: var(--ctp-frappe-blue);
+}
+.section {
+  color: var(--ctp-frappe-mauve);
+}
+#sidebar {
+  background: var(--ctp-mocha-crust);
+}
+.sidebar-button {
+  background-color: var(--ctp-mocha-crust);
+}
+.sidebar-button:hover {
+  background-color: #0f0f15;
+}
+
+#editor-view {
+  z-index: 0;
+}
+
+#editor-textarea {
+  z-index: 1;
+
+  color: transparent;
+  background: transparent;
+}
+
+#container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+#main-window {
+  flex: 1 1 auto;
+  display: flex;
+  /* width: 100%; */
+}
+#sidebar {
+  height: 100%;
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  /* background: grey; */
+}
+
+#terminal {
+  display: flex;
+  flex-direction: column;
+}
+#terminal-pre {
+  flex: 1 1 auto;
+  /* height: 100%; */
+}
+
+.sidebar-button,
+.sidebar-button-selected {
+  /* width: 100%; */
+  height: 80px;
+  border: none;
+  outline: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 69%;
+}
+
+#sidebar-button-editor {
+  background-image: url("./icons/edit.png");
+}
+#sidebar-button-terminal {
+  background-image: url("./icons/terminal.png");
+}
+
+[hidden] {
+  display: none;
+}
