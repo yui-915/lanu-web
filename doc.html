@@ -1,0 +1,889 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lanu</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="instructions">Instructions</h1>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Code</th>
+<th>Arguments</th>
+<th>Returns</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NOP</td>
+<td>0x00</td>
+<td></td>
+<td></td>
+<td>Does nothing</td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x01</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x02</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x03</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SPTR</td>
+<td>0x04</td>
+<td></td>
+<td>pointer</td>
+<td>Pushes a pointer that points to the TOP of the stack</td>
+</tr>
+<tr>
+<td>IPTR</td>
+<td>0x05</td>
+<td></td>
+<td>pointer</td>
+<td>Pushes a pointer that points to the NEXT instruction</td>
+</tr>
+<tr>
+<td>CALL</td>
+<td>0x06</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer, saves the return address in a call stack, and jumps to the address the pointer is pointing to</td>
+</tr>
+<tr>
+<td>RET</td>
+<td>0x07</td>
+<td></td>
+<td></td>
+<td>Pops a return address from the call stack and jumps to it</td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x08</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x09</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x0A</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x0B</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x0C</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x0D</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x0E</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SYS</td>
+<td>0x0F</td>
+<td>2 bytes</td>
+<td></td>
+<td>Pops 2 bytes and does a “system call” with that code</td>
+</tr>
+<tr>
+<td>PUSH8</td>
+<td>0x10</td>
+<td>byte*</td>
+<td>byte</td>
+<td>Pushes the next byte (8-bits) to the stack</td>
+</tr>
+<tr>
+<td>PUSH16</td>
+<td>0x11</td>
+<td>2 bytes*</td>
+<td>2 bytes</td>
+<td>Pushes the next 2 bytes (16-bits) to the stack</td>
+</tr>
+<tr>
+<td>PUSH32</td>
+<td>0x12</td>
+<td>4 bytes*</td>
+<td>4 bytes</td>
+<td>Pushes the next 4 bytes (32-bits) to the stack</td>
+</tr>
+<tr>
+<td>PUSH64</td>
+<td>0x13</td>
+<td>8 bytes*</td>
+<td>8 bytes</td>
+<td>Pushes the next 8 bytes (64-bits) to the stack</td>
+</tr>
+<tr>
+<td>POP8</td>
+<td>0x14</td>
+<td>byte</td>
+<td></td>
+<td>Pops a byte (8-bits) from the stack</td>
+</tr>
+<tr>
+<td>POP16</td>
+<td>0x15</td>
+<td>2 bytes</td>
+<td></td>
+<td>Pops 2 bytes (16-bits) from the stack</td>
+</tr>
+<tr>
+<td>POP32</td>
+<td>0x16</td>
+<td>4 bytes</td>
+<td></td>
+<td>Pops 4 bytes (32-bits) from the stack</td>
+</tr>
+<tr>
+<td>POP64</td>
+<td>0x17</td>
+<td>8 bytes</td>
+<td></td>
+<td>Pops 8 bytes (64-bits) from the stack</td>
+</tr>
+<tr>
+<td>LDR8</td>
+<td>0x18</td>
+<td>pointer</td>
+<td>byte</td>
+<td>Pops a pointer, read a byte (8-bits) from it’s address, push it to the stack</td>
+</tr>
+<tr>
+<td>LDR16</td>
+<td>0x19</td>
+<td>pointer</td>
+<td>2 bytes</td>
+<td>Pops a pointer, read 2 bytes (16-bits) from it’s address, push them to the stack</td>
+</tr>
+<tr>
+<td>LDR32</td>
+<td>0x1A</td>
+<td>pointer</td>
+<td>4 bytes</td>
+<td>Pops a pointer, read 4 bytes (32-bits) from it’s address, push them to the stack</td>
+</tr>
+<tr>
+<td>LDR64</td>
+<td>0x1B</td>
+<td>pointer</td>
+<td>8 bytes</td>
+<td>Pops a pointer, read 8 bytes (64-bits) from it’s address, push them to the stack</td>
+</tr>
+<tr>
+<td>STR8</td>
+<td>0x1C</td>
+<td>byte, pointer</td>
+<td></td>
+<td>Pops a pointer then a byte (8-bits), write the byte at the address of the pointer</td>
+</tr>
+<tr>
+<td>STR16</td>
+<td>0x1D</td>
+<td>2 bytes, pointer</td>
+<td></td>
+<td>Pops a pointer then 2 bytes (16-bits), write the bytes at the address of the pointer</td>
+</tr>
+<tr>
+<td>STR32</td>
+<td>0x1E</td>
+<td>4 bytes, pointer</td>
+<td></td>
+<td>Pops a pointer then 4 bytes (32-bits), write the bytes at the address of the pointer</td>
+</tr>
+<tr>
+<td>STR64</td>
+<td>0x1F</td>
+<td>8 bytes, pointer</td>
+<td></td>
+<td>Pops a pointer then 8 bytes (64-bits), write the bytes at the address of the pointer</td>
+</tr>
+<tr>
+<td>ADD8</td>
+<td>0x20</td>
+<td>byte, byte</td>
+<td>byte</td>
+<td>Pops two 1 byte (8-bits each) values, sums them, pushes the result</td>
+</tr>
+<tr>
+<td>ADD16</td>
+<td>0x21</td>
+<td>2 bytes, 2 bytes</td>
+<td>2 bytes</td>
+<td>Pops two 2 bytes (16-bits each) values, sums them, pushes the result</td>
+</tr>
+<tr>
+<td>ADD32</td>
+<td>0x22</td>
+<td>4 bytes, 4 bytes</td>
+<td>4 bytes</td>
+<td>Pops two 4 bytes (32-bits each) values, sums them, pushes the result</td>
+</tr>
+<tr>
+<td>ADD64</td>
+<td>0x23</td>
+<td>8 bytes, 8 bytes</td>
+<td>8 bytes</td>
+<td>Pops two 8 bytes (64-bits each) values, sums them, pushes the result</td>
+</tr>
+<tr>
+<td>SUB8</td>
+<td>0x24</td>
+<td>byte, byte</td>
+<td>byte</td>
+<td>Pops a byte (A), then another byte (B), pushes (B - A)</td>
+</tr>
+<tr>
+<td>SUB16</td>
+<td>0x25</td>
+<td>2 bytes, 2 bytes</td>
+<td>2 bytes</td>
+<td>Pops 2 bytes (A), then another 2 bytes (B), pushes (B - A)</td>
+</tr>
+<tr>
+<td>SUB32</td>
+<td>0x26</td>
+<td>4 bytes, 4 bytes</td>
+<td>4 bytes</td>
+<td>Pops 4 bytes (A), then another 4 bytes (B), pushes (B - A)</td>
+</tr>
+<tr>
+<td>SUB64</td>
+<td>0x27</td>
+<td>8 bytes, 8 bytes</td>
+<td>8 bytes</td>
+<td>Pops 8 bytes (A), then another 8 bytes (B), pushes (B - A)</td>
+</tr>
+<tr>
+<td>MUL8</td>
+<td>0x28</td>
+<td>byte, byte</td>
+<td>byte</td>
+<td>Pops two 1 byte (8-bits each) values, multiply one by the other, pushes the result</td>
+</tr>
+<tr>
+<td>MUL16</td>
+<td>0x29</td>
+<td>2 bytes, 2 bytes</td>
+<td>2 bytes</td>
+<td>Pops two 2 bytes (16-bits each) values, multiply one by the other, pushes the result</td>
+</tr>
+<tr>
+<td>MUL32</td>
+<td>0x2A</td>
+<td>4 bytes, 4 bytes</td>
+<td>4 bytes</td>
+<td>Pops two 4 bytes (32-bits each) values, multiply one by the other, pushes the result</td>
+</tr>
+<tr>
+<td>MUL64</td>
+<td>0x2B</td>
+<td>8 bytes, 8 bytes</td>
+<td>8 bytes</td>
+<td>Pops two 8 bytes (64-bits each) values, multiply one by the other, pushes the result</td>
+</tr>
+<tr>
+<td>POW8</td>
+<td>0x2C</td>
+<td>byte, byte</td>
+<td>byte</td>
+<td>Pops a byte (A), then another byte (B), pushes (B ** A)</td>
+</tr>
+<tr>
+<td>POW16</td>
+<td>0x2D</td>
+<td>2 bytes, 2 bytes</td>
+<td>2 bytes</td>
+<td>Pops 2 bytes (A), then another 2 bytes (B), pushes (B ** A)</td>
+</tr>
+<tr>
+<td>POW32</td>
+<td>0x2E</td>
+<td>4 bytes, 4 bytes</td>
+<td>4 bytes</td>
+<td>Pops 4 bytes (A), then another 4 bytes (B), pushes (B ** A)</td>
+</tr>
+<tr>
+<td>POW64</td>
+<td>0x2F</td>
+<td>8 bytes, 8 bytes</td>
+<td>8 bytes</td>
+<td>Pops 8 bytes (A), then another 8 bytes (B), pushes (B ** A)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>JMP</td>
+<td>0x50</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer (that points to an instruction/label) and “jumps” (moves code execution) to the address it’s pointing to</td>
+</tr>
+<tr>
+<td>JEQ</td>
+<td>0x51</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer (that points to an instruction/label),  if the compare flag is set to EQ, jumps (moves code execution) to the address the pointer is pointing to</td>
+</tr>
+<tr>
+<td>JNE</td>
+<td>0x52</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer (that points to an instruction/label),  if the compare flag is NOT set to EQ, jumps (moves code execution) to the address the pointer is pointing to</td>
+</tr>
+<tr>
+<td>JGT</td>
+<td>0x53</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer (that points to an instruction/label),  if the compare flag is set to GT, jumps (moves code execution) to the address the pointer is pointing to</td>
+</tr>
+<tr>
+<td>JLT</td>
+<td>0x54</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer (that points to an instruction/label),  if the compare flag is set to LT, jumps (moves code execution) to the address the pointer is pointing to</td>
+</tr>
+<tr>
+<td>JGE</td>
+<td>0x55</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer (that points to an instruction/label),  if the compare flag is set to GT or EQ, jumps (moves code execution) to the address the pointer is pointing to</td>
+</tr>
+<tr>
+<td>JLE</td>
+<td>0x56</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer (that points to an instruction/label),  if the compare flag is set to LT or EQ, jumps (moves code execution) to the address the pointer is pointing to</td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x57</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SCMP8</td>
+<td>0x58</td>
+<td>byte, byte</td>
+<td></td>
+<td>Pops a byte (A: i8), then another byte (B: i8), compare them and set the compare flag accordingly</td>
+</tr>
+<tr>
+<td>SCMP16</td>
+<td>0x59</td>
+<td>2 bytes, 2 bytes</td>
+<td></td>
+<td>Pops 2 bytes (A: i16), then another 2 bytes (B: i16), compare them and set the compare flag accordingly</td>
+</tr>
+<tr>
+<td>SCMP32</td>
+<td>0x5A</td>
+<td>4 bytes, 4 bytes</td>
+<td></td>
+<td>Pops 4 bytes (A: i32), then another 4 bytes (B: i32), compare them and set the compare flag accordingly</td>
+</tr>
+<tr>
+<td>SCMP64</td>
+<td>0x5B</td>
+<td>8 bytes, 8 bytes</td>
+<td></td>
+<td>Pops 8 bytes (A: i64), then another 8 bytes (B: i64), compare them and set the compare flag accordingly</td>
+</tr>
+<tr>
+<td>UCMP8</td>
+<td>0x5C</td>
+<td>byte, byte</td>
+<td></td>
+<td>Pops a byte (A: u8), then another byte (B: u8), compare them and set the compare flag accordingly</td>
+</tr>
+<tr>
+<td>UCMP16</td>
+<td>0x5D</td>
+<td>2 bytes, 2 bytes</td>
+<td></td>
+<td>Pops 2 bytes (A: u16), then another 2 bytes (B: u16), compare them and set the compare flag accordingly</td>
+</tr>
+<tr>
+<td>UCMP32</td>
+<td>0x5E</td>
+<td>4 bytes, 4 bytes</td>
+<td></td>
+<td>Pops 4 bytes (A: u32), then another 4 bytes (B: u32), compare them and set the compare flag accordingly</td>
+</tr>
+<tr>
+<td>UCMP64</td>
+<td>0x5F</td>
+<td>8 bytes, 8 bytes</td>
+<td></td>
+<td>Pops 8 bytes (A: u64), then another 8 bytes (B: u64), compare them and set the compare flag accordingly</td>
+</tr>
+<tr>
+<td>FCMP32</td>
+<td>0x60</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>FCMP64</td>
+<td>0x61</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x62</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>0x63</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DUP8</td>
+<td>0x64</td>
+<td>byte</td>
+<td>byte, byte</td>
+<td>duplicate the top byte (8-bits) in the stack</td>
+</tr>
+<tr>
+<td>DUP16</td>
+<td>0x65</td>
+<td>bytes</td>
+<td>2 bytes, 2 bytes</td>
+<td>duplicate the top 2 bytes (16-bits) in the stack</td>
+</tr>
+<tr>
+<td>DUP32</td>
+<td>0x66</td>
+<td>bytes</td>
+<td>4 bytes, 4 bytes</td>
+<td>duplicate the top 4 bytes (32-bits) in the stack</td>
+</tr>
+<tr>
+<td>DUP64</td>
+<td>0x67</td>
+<td>bytes</td>
+<td>8 bytes, 8 bytes</td>
+<td>duplicate the top 8 bytes (64-bits) in the stack</td>
+</tr>
+<tr>
+<td>SWP8</td>
+<td>0x68</td>
+<td>byte, byte</td>
+<td>byte, byte</td>
+<td>swaps the top two 1 byte values in the stack [A, B] =&gt; [B, A]</td>
+</tr>
+<tr>
+<td>SWP16</td>
+<td>0x69</td>
+<td>2 bytes, 2 bytes</td>
+<td>2 bytes, 2 bytes</td>
+<td>swaps the top two 2 byte values in the stack [A, B] =&gt; [B, A]</td>
+</tr>
+<tr>
+<td>SWP32</td>
+<td>0x6A</td>
+<td>4 bytes, 4 bytes</td>
+<td>4 bytes, 4 bytes</td>
+<td>swaps the top two 4 byte values in the stack [A, B] =&gt; [B, A]</td>
+</tr>
+<tr>
+<td>SWP64</td>
+<td>0x6B</td>
+<td>8 bytes, 8 bytes</td>
+<td>8 bytes, 8 bytes</td>
+<td>swaps the top two 8 byte values in the stack [A, B] =&gt; [B, A]</td>
+</tr>
+<tr>
+<td>ROT8</td>
+<td>0x6C</td>
+<td>byte, byte, byte</td>
+<td>byte, byte, byte</td>
+<td>swaps the first most top byte value, and the third most top byte value (rotates the top three byte values ?) [A, B, C] =&gt; [C, B, A]</td>
+</tr>
+<tr>
+<td>ROT16</td>
+<td>0x6D</td>
+<td>2 bytes, 2 bytes, 2 bytes</td>
+<td>2 bytes, 2 bytes, 2 bytes</td>
+<td>swaps the top 2 byte value, and the third most top 2 byte value (rotates the top three 2 byte values ?) [A, B, C] =&gt; [C, B, A]</td>
+</tr>
+<tr>
+<td>ROT32</td>
+<td>0x6E</td>
+<td>4 bytes, 4 bytes, 4 bytes</td>
+<td>4 bytes, 4 bytes, 4 bytes</td>
+<td>swaps the top 4 byte value, and the third most top 4 byte value (rotates the top three 4 byte values ?) [A, B, C] =&gt; [C, B, A]</td>
+</tr>
+<tr>
+<td>ROT64</td>
+<td>0x6F</td>
+<td>8 bytes, 8 bytes, 8 bytes</td>
+<td>8 bytes, 8 bytes, 8 bytes</td>
+<td>swaps the top 8 byte value, and the third most top 8 byte value (rotates the top three 8 byte values ?) [A, B, C] =&gt; [C, B, A]</td>
+</tr>
+</tbody>
+</table><h5 id="the-argument-is-append-in-the-bytecode-rather-than-in-the-stack">*The argument is append in the bytecode rather than in the stack</h5>
+<ul>
+<li>TODO:
+<ul>
+<li>Math:
+<ul>
+<li>add (float)</li>
+<li>sub (float)</li>
+<li>mul (float)</li>
+<li>pow (float)</li>
+<li>div (singed and unsigned) (int and float)</li>
+<li>remaining / modulo (singed and unsigned) (int and float)</li>
+</ul>
+</li>
+<li>bitwise opration (right shift signed and unsigned)</li>
+<li>compare (float)</li>
+<li>swap(2), rotate(3)</li>
+<li>duplicate</li>
+<li>call</li>
+<li>return</li>
+<li>value casting</li>
+<li>sleep</li>
+<li>stack save &amp; restore</li>
+<li>negate (just XOR ?)</li>
+<li>relative pointers ? (perhaps just a macro)</li>
+</ul>
+</li>
+</ul>
+<p>.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="compare-flag">Compare flag</h1>
+
+<table>
+<thead>
+<tr>
+<th>N</th>
+<th>condition</th>
+<th>result</th>
+<th>hex code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>B == A</td>
+<td>EQ</td>
+<td>0x01</td>
+</tr>
+<tr>
+<td>2</td>
+<td>B &gt; A</td>
+<td>GT</td>
+<td>0x02</td>
+</tr>
+<tr>
+<td>3</td>
+<td>B &lt; A</td>
+<td>LT</td>
+<td>0x03</td>
+</tr>
+</tbody>
+</table><p>.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="bytecode-layout">Bytecode Layout</h1>
+<p>* the bit-width fields specify the address</p>
+
+<table>
+<thead>
+<tr>
+<th>N</th>
+<th>8-bit</th>
+<th>16-bit</th>
+<th>32-bit</th>
+<th>64-bit</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0x00</td>
+<td>0x00</td>
+<td>0x00</td>
+<td>0x00</td>
+<td>Bytecode version</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0x04</td>
+<td>0x04</td>
+<td>0x04</td>
+<td>0x04</td>
+<td>Bit width (0x00 = 8-bit , 0x01 = 16-bit , 0x02 = 32-bit , 0x03 = 64-bit)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0x05</td>
+<td>0x05</td>
+<td>0x05</td>
+<td>0x05</td>
+<td>Uninitialized data section size (in bytes)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0x06</td>
+<td>0x07</td>
+<td>0x09</td>
+<td>0x0d</td>
+<td>Main stack size (in bytes)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0x07</td>
+<td>0x09</td>
+<td>0x0d</td>
+<td>0x15</td>
+<td>Pointer to (the address of) the instructions entry point</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0x08</td>
+<td>0x0b</td>
+<td>0x11</td>
+<td>0x1d</td>
+<td>Exported labels</td>
+</tr>
+<tr>
+<td>7</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>Initialized data section</td>
+</tr>
+<tr>
+<td>8</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>Instructions section</td>
+</tr>
+</tbody>
+</table><p>.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="memory-layout">Memory Layout</h1>
+
+<table>
+<thead>
+<tr>
+<th>N</th>
+<th>Size</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>bytecode size</td>
+<td>The bytecode itself</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Read from bytecode</td>
+<td>Uninitialized data (automatically allocated)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Read from bytecode</td>
+<td>The main stack</td>
+</tr>
+<tr>
+<td>4</td>
+<td>unknown</td>
+<td>The heap</td>
+</tr>
+</tbody>
+</table><p>.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="system-calls">System calls</h1>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Code</th>
+<th>Arguments</th>
+<th>Returns</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EXIT</td>
+<td>0x0000</td>
+<td>byte</td>
+<td></td>
+<td>Pops a byte (as an exit code) and exits the program</td>
+</tr>
+<tr>
+<td>STDOUT_WRITE</td>
+<td>0x0001</td>
+<td>pointer</td>
+<td></td>
+<td>Pops a pointer to a string, output that string to stdout</td>
+</tr>
+</tbody>
+</table><ul>
+<li>Todo:
+<ul>
+<li>input</li>
+<li>output</li>
+<li>alloc</li>
+<li>free</li>
+<li>file access</li>
+<li>call external function</li>
+<li>multi-threading</li>
+</ul>
+</li>
+</ul>
+<p>.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="preprocessor">Preprocessor</h1>
+<ul>
+<li>TODO:
+<ul>
+<li>include</li>
+<li>macro</li>
+<li>scripten ?</li>
+</ul>
+</li>
+</ul>
+<p>.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="standard-library">Standard library</h1>
+<ul>
+<li>TODO:
+<ul>
+<li>tty</li>
+</ul>
+</li>
+</ul>
+<p>.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="app">App</h1>
+<ul>
+<li>Todo:
+<ul>
+<li>external pause / resume</li>
+<li>external memory read/write + mapping</li>
+<li>external instruction pointer access</li>
+<li>hot reloading</li>
+<li>embedding</li>
+<li>web</li>
+<li>debugger</li>
+</ul>
+</li>
+</ul>
+<p>.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="compiler">Compiler</h1>
+<ul>
+<li>Todo:
+<ul>
+<li>export label and variable offsets</li>
+<li>dynamic &amp; static linking</li>
+</ul>
+</li>
+</ul>
+</div>
+</body>
+
+</html>
